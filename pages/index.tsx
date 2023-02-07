@@ -14,15 +14,11 @@ import ResizablePanel from "../components/ResizablePanel";
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState("");
-  const [form, setForm] = useState<FormType>("段落");
   const [generatedChat, setGeneratedChat] = useState<String>("");
 
   console.log("Streamed response: ", generatedChat);
 
-  const prompt =
-    form === '段落'?
-      `用一段话详略得当总结这段聊天内容：\n${chat}`
-      : `用无序列表详略得当总结这段聊天内容：\n${chat}`;
+  const prompt = chat
 
   const generateChat = async (e: any) => {
     e.preventDefault();
@@ -66,68 +62,37 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
-        <title>Chat Simplifier</title>
+        <title>简明ChatGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <a
-          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100 mb-5"
-          href="https://github.com/zhengbangbo/chat-simplifier"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Github />
-          <p>Star on GitHub</p>
-        </a>
-        <h1 className="sm:text-6xl text-4xl max-w-2xl font-bold text-slate-900">
-          聊天内容简化器
+        <h1 className="sm:text-4xl text-2xl max-w-2xl font-bold text-slate-900">
+          简明ChatGPT
         </h1>
-        <p className="text-slate-500 mt-5">群消息太多？太长不看！</p>
+        <p className="text-slate-500 mt-5">快速体验😄</p>
         <div className="max-w-xl w-full">
-          <div className="flex mt-10 items-center space-x-3">
-            <Image
-              src="/1-black.png"
-              width={30}
-              height={30}
-              alt="1 icon"
-              className="mb-5 sm:mb-0"
-            />
+          {/* <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium">
               粘贴你的聊天内容{" "}
-              <span className="text-blue-200 hover:text-blue-400">
-                <a
-                  href="https://github.com/zhengbangbo/chat-simplifier/wiki/Help"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >(点击这里查看教程)</a>
-              </span>
             </p>
-          </div>
+          </div> */}
           <textarea
             value={chat}
             onChange={(e) => setChat(e.target.value)}
             rows={4}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={
-              "多选聊天内容，复制。通常包含昵称、时间和内容。"
+              "如何选购一款满意的路由器？"
             }
           />
-          <div className="flex mb-5 items-center space-x-3">
-            <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
-            <p className="text-left font-medium">选择输出结果的形式。</p>
-          </div>
-          <div className="block">
-            <DropDown form={form} setForm={(newForm) => setForm(newForm)} />
-          </div>
+
 
           {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
               onClick={(e) => generateChat(e)}
             >
-              简化聊天内容 &rarr;
+              看看AI怎么说 &rarr;
             </button>
           )}
           {loading && (
@@ -138,17 +103,6 @@ const Home: NextPage = () => {
               <LoadingDots color="white" style="large" />
             </button>
           )}
-          <div className="mt-1 items-center space-x-3">
-            <span className="text-slate-200">
-              不建议上传过于隐私的聊天内容，详情查看
-              <a
-                className="text-blue-200 hover:text-blue-400"
-                href="https://github.com/zhengbangbo/chat-simplifier/wiki/Privacy-Policy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >《隐私声明》</a>
-            </span>
-          </div>
         </div>
         <Toaster
           position="top-center"
@@ -185,7 +139,6 @@ const Home: NextPage = () => {
           </AnimatePresence>
         </ResizablePanel>
       </main>
-      <Footer />
     </div>
   );
 };
