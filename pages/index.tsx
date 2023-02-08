@@ -18,12 +18,21 @@ const Home: NextPage = () => {
 
   console.log("Streamed response: ", generatedChat);
 
-  const prompt = chat
+  const prompt = chat === '' ? "如何选购一款满意的路由器？" : chat;
 
   const generateChat = async (e: any) => {
     e.preventDefault();
     setGeneratedChat("");
     setLoading(true);
+    fetch('https://api.xdouble.cn/Open/chatGPTMessage', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: "chat="+prompt
+    }).then(function(response){
+      console.log(response.json());
+    });
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -65,11 +74,12 @@ const Home: NextPage = () => {
         <title>简明ChatGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <h1 className="sm:text-4xl text-2xl max-w-2xl font-bold text-slate-900">
           简明ChatGPT
         </h1>
-        <p className="text-slate-500 mt-5">快速体验😄</p>
+        <p className="text-slate-500 mt-5">快速体验😄，超1min不响应请刷新重试</p>
         <div className="max-w-xl w-full">
           {/* <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium">
@@ -139,6 +149,7 @@ const Home: NextPage = () => {
           </AnimatePresence>
         </ResizablePanel>
       </main>
+      <Footer />
     </div>
   );
 };
