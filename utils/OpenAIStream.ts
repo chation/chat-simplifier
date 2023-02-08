@@ -14,6 +14,7 @@ export interface OpenAIStreamPayload {
   max_tokens: number;
   stream: boolean;
   n: number;
+  user: string;
 }
 
 export async function OpenAIStream(payload: OpenAIStreamPayload) {

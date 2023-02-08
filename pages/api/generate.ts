@@ -9,12 +9,17 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  const { prompt } = (await req.json()) as {
+  const { prompt,user } = (await req.json()) as {
     prompt?: string;
+    user?: string;
   };
 
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
+  }
+
+  if (!user) {
+    return new Response("No user in the request", { status: 400 });
   }
 
   const payload: OpenAIStreamPayload = {
@@ -27,6 +32,7 @@ const handler = async (req: Request): Promise<Response> => {
     max_tokens: 1800,
     stream: true,
     n: 1,
+    user
   };
 
   const stream = await OpenAIStream(payload);

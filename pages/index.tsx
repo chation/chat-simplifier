@@ -10,6 +10,9 @@ import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
+import stringRandom from 'string-random';
+
+const user = stringRandom(8);
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -29,7 +32,7 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
       },
-      body: "chat="+prompt
+      body: "chat="+prompt+"&user="+user
     }).then(function(response){
       console.log(response.json());
     });
@@ -40,6 +43,7 @@ const Home: NextPage = () => {
       },
       body: JSON.stringify({
         prompt,
+        user
       }),
     });
     console.log("Edge function returned.");
@@ -76,7 +80,7 @@ const Home: NextPage = () => {
       </Head>
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <h1 className="sm:text-4xl text-2xl max-w-2xl font-bold text-slate-900">
+        <h1 className="sm:text-4xl text-2xl max-w-2xl font-bold text-slate-900" data-user={user}>
           简明ChatGPT
         </h1>
         <p className="text-slate-500 mt-5">快速体验😄，超1min不响应请刷新重试</p>
